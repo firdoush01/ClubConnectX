@@ -1,49 +1,48 @@
-import React from 'react';
-
 const TeamMemberItem = ({ member, index, onChangeMember, onRemoveMember }) => {
   return (
-    <div className="bg-gray-800 p-4 rounded-lg border border-gray-700">
-      <div className="flex justify-between items-center mb-3">
-        <span className="font-medium text-purple-300">Member {index + 1}</span>
-        <button 
-          type="button" 
-          className="text-red-400 hover:text-red-300 transition duration-200"
-          onClick={() => onRemoveMember(index)}
-        >
-          Remove
-        </button>
+    <div className="p-4 bg-white border border-gray-200 rounded-lg space-y-4 shadow-sm">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input
+          type="text"
+          placeholder="Full Name"
+          value={member.name || ''}
+          onChange={(e) => onChangeMember(index, 'name', e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-indigo-500"
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={member.email || ''}
+          onChange={(e) => onChangeMember(index, 'email', e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-indigo-500"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Phone"
+          value={member.phone || ''}
+          onChange={(e) => onChangeMember(index, 'phone', e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-indigo-500"
+          required
+        />
+        <input
+          type="text"
+          placeholder="College / Institution"
+          value={member.college || ''}
+          onChange={(e) => onChangeMember(index, 'college', e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-indigo-500"
+          required
+        />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div>
-          <input 
-            type="text" 
-            placeholder="Full Name" 
-            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white" 
-            value={member.name} 
-            onChange={(e) => onChangeMember(index, 'name', e.target.value)} 
-            required 
-          />
-        </div>
-        {/* <div>
-          <input 
-            type="email" 
-            placeholder="Email Address" 
-            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white" 
-            value={member.email} 
-            onChange={(e) => onChangeMember(index, 'email', e.target.value)} 
-            required 
-          />
-        </div>
-        <div>
-          <input 
-            type="text" 
-            placeholder="Phone Number" 
-            className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white" 
-            value={member.phone} 
-            onChange={(e) => onChangeMember(index, 'phone', e.target.value)} 
-            required 
-          />
-        </div> */}
+      <div className="flex justify-end">
+        <button
+          type="button"
+          onClick={() => onRemoveMember(index)}
+          className="text-sm text-red-500 hover:text-red-700"
+        >
+          Remove Member
+        </button>
       </div>
     </div>
   );
