@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import TeamMemberItem from '../components/TeamMemberItem';
 import { useParams } from 'react-router-dom';
-const StudentRegisterPage = ({  onRegister }) => {
+
+const StudentRegisterPage = ({ onRegister }) => {
   const [leader, setLeader] = useState({ name: '', email: '' });
   const [teamName, setTeamName] = useState('');
   const [teamMembers, setTeamMembers] = useState([]);
-  
+
   const { eventId } = useParams();
 
   const handleAddMember = () => {
@@ -25,8 +26,6 @@ const StudentRegisterPage = ({  onRegister }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = { eventId, leader, teamName, teamMembers };
-    console.log("payload:", payload);
-    console.log("body:",JSON.stringify(payload));
     try {
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/events/studentregister`, {
         method: 'POST',
@@ -37,102 +36,78 @@ const StudentRegisterPage = ({  onRegister }) => {
       if (data.success) {
         alert('Registration successful!');
         onRegister();
-      } 
+      }
     } catch (error) {
       console.error('Error registering:', error);
-     
     }
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-black text-white p-8 rounded-xl shadow-2xl border border-purple-700 my-8">
-      <div className="mb-8 text-center">
-        <h2 className="text-3xl font-bold text-purple-400">Event Registration</h2>
-        <div className="h-1 w-24 bg-purple-600 mx-auto mt-2 rounded-full"></div>
+    <div className="max-w-4xl mx-auto px-6 py-10 bg-[#f8f9fc] min-h-screen font-sans">
+      <div className="mb-10 text-left">
+        <h2 className="text-3xl font-bold text-[#1b1f3b] mb-2">Register for Event</h2>
+        <p className="text-gray-500">Fill in your team details below to register.</p>
       </div>
-      
-      <form onSubmit={handleSubmit} className="space-y-6">
-    
-        <div className="bg-gray-900 p-6 rounded-lg border-l-4 border-purple-500">
-          <h3 className="text-xl font-semibold mb-4 text-purple-300">Team Leader</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-300">Full Name</label>
+
+      <form onSubmit={handleSubmit} className="space-y-10">
+
+        {/* Team Leader */}
+        <div className="bg-white p-6 rounded-lg shadow border border-gray-200">
+          <h3 className="text-xl font-semibold text-[#1b1f3b] mb-4">Team Leader</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block mb-1 text-sm font-medium text-gray-700">Full Name</label>
               <input 
                 type="text" 
-                className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white" 
+                className="w-full p-3 border border-gray-300 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1b1f3b]" 
                 value={leader.name} 
                 onChange={(e) => setLeader({ ...leader, name: e.target.value })} 
                 required 
               />
             </div>
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-300">Email Address</label>
+            <div>
+              <label className="block mb-1 text-sm font-medium text-gray-700">Email Address</label>
               <input 
                 type="email" 
-                className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white" 
+                className="w-full p-3 border border-gray-300 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1b1f3b]" 
                 value={leader.email} 
                 onChange={(e) => setLeader({ ...leader, email: e.target.value })} 
                 required 
               />
             </div>
-            {/* <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-300">Phone Number</label>
-              <input 
-                type="text" 
-                className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white" 
-                value={leader.phone} 
-                onChange={(e) => setLeader({ ...leader, phone: e.target.value })} 
-                required 
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-300">College / Institution</label>
-              <input 
-                type="text" 
-                className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white" 
-                value={leader.college} 
-                onChange={(e) => setLeader({ ...leader, college: e.target.value })} 
-                required 
-              />
-            </div> */}
           </div>
         </div>
 
-        <div className="bg-gray-900 p-6 rounded-lg border-l-4 border-purple-500">
-          <div className="space-y-2">
-            <label className="block text-xl font-semibold text-purple-300">Team Name</label>
-            <input 
-              type="text" 
-              className="w-full p-4 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white text-lg" 
-              value={teamName} 
-              onChange={(e) => setTeamName(e.target.value)} 
-              required 
-            />
-          </div>
+        {/* Team Name */}
+        <div className="bg-white p-6 rounded-lg shadow border border-gray-200">
+          <label className="block mb-2 text-lg font-semibold text-[#1b1f3b]">Team Name</label>
+          <input 
+            type="text" 
+            className="w-full p-3 border border-gray-300 rounded-md bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1b1f3b]" 
+            value={teamName} 
+            onChange={(e) => setTeamName(e.target.value)} 
+            required 
+          />
         </div>
 
-        
-        <div className="bg-gray-900 p-6 rounded-lg border-l-4 border-purple-500">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-xl font-semibold text-purple-300">Team Members</h3>
-            <button 
-              type="button" 
-              className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center space-x-1"
+        {/* Team Members */}
+        <div className="bg-white p-6 rounded-lg shadow border border-gray-200">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-semibold text-[#1b1f3b]">Team Members</h3>
+            <button
+              type="button"
+              className="px-4 py-2 text-sm font-medium bg-[#1b1f3b] text-white rounded hover:bg-[#2b2f4c] transition"
               onClick={handleAddMember}
             >
-              <span>Add Member</span>
-              <span className="text-lg">+</span>
+              + Add Member
             </button>
           </div>
-          
+          {teamMembers.length === 0 && (
+            <p className="text-gray-500 text-sm italic">No members added yet.</p>
+          )}
           <div className="space-y-4">
-            {teamMembers.length === 0 && (
-              <p className="text-gray-500 text-center py-6">No team members added yet. Click "Add Member" to add team members.</p>
-            )}
-            
             {teamMembers.map((member, index) => (
-              <TeamMemberItem 
+              <TeamMemberItem
                 key={index}
                 member={member}
                 index={index}
@@ -143,13 +118,15 @@ const StudentRegisterPage = ({  onRegister }) => {
           </div>
         </div>
 
-        
-        <button 
-          type="submit" 
-          className="w-full bg-purple-600 hover:bg-purple-700 text-white py-4 rounded-lg font-bold text-lg transition duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 shadow-lg"
-        >
-          Complete Registration
-        </button>
+        {/* Submit Button */}
+        <div className="text-right">
+          <button
+            type="submit"
+            className="bg-[#1b1f3b] hover:bg-[#2b2f4c] text-white font-bold py-3 px-8 rounded-md transition"
+          >
+            Complete Registration
+          </button>
+        </div>
       </form>
     </div>
   );
